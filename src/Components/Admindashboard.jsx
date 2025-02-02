@@ -48,6 +48,55 @@ const AdminDashboard = () => {
       text: 'I found this very helpful.',
       timestamp: new Date(),
       postTitle: 'Blog Post 2'
+    },
+    {
+      id: 3,
+      author: 'Jane Smith',
+      text: 'I found this very helpful.',
+      timestamp: new Date(),
+      postTitle: 'Blog Post 2'
+    },
+    {
+      id: 4,
+      author: 'Jane Smith',
+      text: 'I found this very helpful.',
+      timestamp: new Date(),
+      postTitle: 'Blog Post 2'
+    },
+    {
+      id: 5,
+      author: 'Jane Smith',
+      text: 'I found this very helpful.',
+      timestamp: new Date(),
+      postTitle: 'Blog Post 2'
+    },
+    {
+      id: 6,
+      author: 'Jane Smith',
+      text: 'I found this very helpful.',
+      timestamp: new Date(),
+      postTitle: 'Blog Post 2'
+    },
+    {
+      id: 7,
+      author: 'Jane Smith',
+      text: 'I found this very helpful.',
+      timestamp: new Date(),
+      postTitle: 'Blog Post 2'
+    },
+    {
+      id: 8,
+      author: 'Jane Smith',
+      text: 'I found this very helpful.',
+      timestamp: new Date(),
+      postTitle: 'Blog Post 2'
+    },
+    {
+      id: 9,
+      author: 'Jane Smith',
+      text: 'I found this very helpful.',
+      timestamp: new Date(),
+      postTitle: 'Blog Post 2'
     }
   ]);
 

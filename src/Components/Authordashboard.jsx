@@ -57,7 +57,7 @@ const AuthorDashboard = () => {
       id: 1,
       title: 'Sample Blog Post',
       content: 'This is a sample blog post content.',
-      image: 'https://via.placeholder.com/150',
+      image: 'https://cdn.pixabay.com/photo/2020/02/11/19/56/laptop-4840790_1280.jpg',
       date: new Date().toISOString()
     }
   ]);

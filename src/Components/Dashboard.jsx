@@ -1,7 +1,7 @@
 import {useEffect} from 'react';
-import { useNavigate } from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import '../Styles/dashboard.css';
-import { decodeToken } from './Login';
+import {decodeToken} from './Login';
 
 const Dashboard = () => {
   const navigate = useNavigate();

@@ -8,7 +8,7 @@ import AuthorDashboard from './Components/Authordashboard';
 import Dashboard from './Components/Dashboard';
 import './App.css';
 
-// Auth check functions
+
 const isAdmin = () => {
   return localStorage.getItem('userRole') === 'admin';
 };
@@ -17,7 +17,7 @@ const isAuthor = () => {
   return localStorage.getItem('userRole') === 'author';
 };
 
-// Protected Route components
+
 const ProtectedAdminRoute = (children) => {
   if (!isAdmin()) {
     return <Navigate to="/login" replace />;
@@ -36,14 +36,13 @@ function App() {
   return (
     <Router>
       <Routes>
-        {/* Public Routes */}
         <Route path="/" element={<LandingPage />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
         <Route path="/home" element={<HomePage />} />
         <Route path="/dashboard" element={<Dashboard />} />
 
-        {/* Protected Admin Route */}
+        
         <Route 
           path="/admin" 
           element={
@@ -53,7 +52,7 @@ function App() {
           } 
         />
 
-        {/* Protected Author Route */}
+        
         <Route 
           path="/author" 
           element={
@@ -62,8 +61,7 @@ function App() {
             </ProtectedAuthorRoute>
           } 
         />
-
-        {/* Catch-all redirect to home */}
+     
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Router>
