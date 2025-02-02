@@ -1,12 +1,17 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import '../Styles/Signup.css'
+import { Link, useNavigate } from 'react-router-dom';
 
 const Signup = () => {
   const [formData, setFormData] = useState({
     username: '',
     email: '',
-    password: ''
+    password: '',
+    role:''
   });
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -16,10 +21,38 @@ const Signup = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission here
-    console.log('Form submitted:', formData);
+    try {
+      setLoading(true);
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/register`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      })
+  
+      console.log('Signup form submitted:', formData);
+      console.log('Response:', response);
+      
+      const data = await response.json();
+      console.log('Data:', data);
+  
+      if (response.status === 201) {
+        console.log('User created successfully');
+        alert('User created successfully');
+        navigate('/login');
+      } else {
+        console.log('User creation failed');
+        alert('User creation failed');
+        setLoading(false);
+      }
+    } catch (error) {
+      alert('An error occurred. Please try again.');
+      console.log('An error occurred:', error);
+      setLoading(false);
+    }
   };
 
   return (
@@ -53,11 +86,24 @@ const Signup = () => {
             onChange={handleChange}
             required
           />
-          
+          <div className="role-select-container">
+            <select
+              name="role"
+              value={formData.role}
+              onChange={handleChange}
+              required
+            >
+              <option value="" disabled>ROLE</option>
+              <option value="admin">ADMIN</option>
+              <option value="author">AUTHOR</option>
+              <option value="user">USER</option>
+            </select>
+          </div>
           <button type="submit" className="create-user-btn">
-            CREATE USER
+            {loading ? 'loading...' : 'Create Account'}
           </button>
         </form>
+        <p>Already have an account? <Link to="/login">log in</Link></p>
       </div>
     </div>
   );

@@ -1,30 +1,38 @@
-import React from 'react';
+import {useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../Styles/dashboard.css';
+import { decodeToken } from './Login';
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  const userRole = localStorage.getItem('userRole');
+  const token = localStorage.getItem('access_token');
+  
+  let userRole = null;
+  if (token) {
+    const decodedToken = decodeToken(token);
+    userRole = decodedToken?.role; 
+  }
 
-  const handleNavigation = (path) => {
-    // if (path === '/author' && userRole !== 'AUTHOR') {
-    //   alert('You need author privileges to access the Author Dashboard');
-    //   return;
-    // }
-    // if (path === '/admin' && userRole !== 'ADMIN') {
-    //   alert('You need admin privileges to access the Admin Dashboard');
-    //   return;
-    // }
+  useEffect(() => {
+    if (!token) {
+      navigate('/login'); 
+    }
+  }, [token, navigate]);
+
+  const handleNavigation = (path, requiredRole) => {
+    if (userRole !== requiredRole) {
+      alert(`Access Denied! You need ${requiredRole} privileges.`);
+      return;
+    }
     navigate(path);
   };
-
   return (
     <div className="dashboard-container">
       <h1>Welcome to AD Blogs Dashboard</h1>
       <div className="dashboard-cards">
         <div 
           className="dashboard-card"
-          onClick={() => handleNavigation('/author')}
+          onClick={() => navigate('/author')}
         >
           <div className="card-icon">✍️</div>
           <h2>Author Dashboard</h2>
@@ -33,7 +41,7 @@ const Dashboard = () => {
 
         <div 
           className="dashboard-card"
-          onClick={() => handleNavigation('/admin')}
+          onClick={() => navigate('/admin')}
         >
           <div className="card-icon">👑</div>
           <h2>Admin Dashboard</h2>

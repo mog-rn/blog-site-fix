@@ -1,5 +1,24 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import '../Styles/login.css'
+import { Link, useNavigate } from 'react-router-dom';
+
+export const decodeToken = (token) => {
+  try {
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const jsonPayload = decodeURIComponent(
+      atob(base64)
+        .split('')
+        .map((c) => `%${('00' + c.charCodeAt(0).toString(16)).slice(-2)}`)
+        .join('')
+    );
+
+    return JSON.parse(jsonPayload);
+  } catch (error) {
+    console.error('Invalid token:', error);
+    return null;
+  }
+};
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -7,6 +26,8 @@ const Login = () => {
     password: '',
     role: ''
   });
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -16,9 +37,46 @@ const Login = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Login form submitted:', formData);
+    try {
+      setLoading(true);
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      })
+  
+      console.log('Signup form submitted:', formData);
+      console.log('Response:', response);
+      
+      const data = await response.json();
+      console.log('Data:', data);
+  
+      if (response.status === 200) {
+        const { access_token } = data;
+
+        const decodedToken = decodeToken(access_token);
+        if (!decodedToken) throw new Error('Invalid token');
+
+        const { role } = decodedToken;
+
+        localStorage.setItem('access_token', access_token);
+        localStorage.setItem('user_role', role);
+
+        navigate('/dashboard');
+      } else {
+        console.log('Login Unsuccessful');
+        alert('Login Unsuccessful');
+        setLoading(false);
+      }
+    } catch (error) {
+      alert('An error occurred. Please try again.');
+      console.log('An error occurred:', error);
+      setLoading(false);
+    }
   };
 
   return (
@@ -43,24 +101,14 @@ const Login = () => {
             onChange={handleChange}
             required
           />
-          
-          <div className="role-select-container">
-            <select
-              name="role"
-              value={formData.role}
-              onChange={handleChange}
-              required
-            >
-              <option value="" disabled>ROLE</option>
-              <option value="ADMIN">ADMIN</option>
-              <option value="AUTHOR">AUTHOR</option>
-              <option value="USER">USER</option>
-            </select>
-          </div>
 
           <button type="submit" className="login-btn">
-            LOGIN
+          {loading ? 'loading...' : 'Login'}
           </button>
+
+          <p>
+            Don&apos;t have an account? <Link to="/signup">Sign up</Link>
+          </p>
         </form>
       </div>
     </div>

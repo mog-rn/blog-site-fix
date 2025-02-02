@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import '../Styles/admindashboard.css';
 
-const CommentItem = ({ comment, onAuthorize, onReject }) => {
+const CommentItem = (comment, onAuthorize, onReject) => {
   return (
     <div className="comment-item">
       <div className="comment-content">
@@ -33,7 +33,7 @@ const CommentItem = ({ comment, onAuthorize, onReject }) => {
 };
 
 const AdminDashboard = () => {
-  // Sample pending comments - replace with actual data
+
   const [pendingComments, setPendingComments] = useState([
     {
       id: 1,
@@ -52,7 +52,7 @@ const AdminDashboard = () => {
   ]);
 
   const handleAuthorize = (commentId) => {
-    // Add your authorization logic here
+    
     setPendingComments(comments => 
       comments.filter(comment => comment.id !== commentId)
     );
@@ -60,7 +60,7 @@ const AdminDashboard = () => {
   };
 
   const handleReject = (commentId) => {
-    // Add your rejection logic here
+  
     setPendingComments(comments => 
       comments.filter(comment => comment.id !== commentId)
     );

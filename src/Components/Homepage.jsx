@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import '../Styles/homepage.css';
 
-const BlogPost = ({ post }) => {
+const BlogPost = (post) => {
   const [likes, setLikes] = useState(0);
   const [showComments, setShowComments] = useState(false);
 
@@ -30,7 +30,7 @@ const BlogPost = ({ post }) => {
 };
 
 const HomePage = () => {
-  // Sample blog posts - replace with actual data
+  
   const samplePosts = [
     {
       id: 1,

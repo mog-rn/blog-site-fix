@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link } from "react-router-dom";
 import '../Styles/LandingPage.css';
 
@@ -19,12 +18,8 @@ const LandingPage = () => {
         <div className="hero-content">
           <h1>Publish your passions, your way</h1>
           <h2>Create a unique and beautiful blog easily.</h2>
-          {/* <button className="get-started-btn">Get Started</button> */}
           <Link to="/home" className="get-started-btn">Get Started</Link>
         </div>
-        {/* <div className="hero-image"> <div className='hero-image'> */}
-          {/* <img src="/src/assets/images/hero-image.jpg" alt="background image" /> */}
-        {/* </div> */}
       </header>
     </div>
   );

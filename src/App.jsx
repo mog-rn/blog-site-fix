@@ -1,4 +1,3 @@
-import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import LandingPage from './Components/LandingPage';
 import Signup from './Components/Signup';
@@ -11,22 +10,22 @@ import './App.css';
 
 // Auth check functions
 const isAdmin = () => {
-  return localStorage.getItem('userRole') === 'ADMIN';
+  return localStorage.getItem('userRole') === 'admin';
 };
 
 const isAuthor = () => {
-  return localStorage.getItem('userRole') === 'AUTHOR';
+  return localStorage.getItem('userRole') === 'author';
 };
 
 // Protected Route components
-const ProtectedAdminRoute = ({ children }) => {
+const ProtectedAdminRoute = (children) => {
   if (!isAdmin()) {
     return <Navigate to="/login" replace />;
   }
   return children;
 };
 
-const ProtectedAuthorRoute = ({ children }) => {
+const ProtectedAuthorRoute = (children) => {
   if (!isAuthor()) {
     return <Navigate to="/login" replace />;
   }

@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import '../Styles/authordashboard.css'
 
-const BlogForm = ({ onSubmit, initialData = null, onCancel }) => {
+const BlogForm = (onSubmit, initialData = null, onCancel) => {
   const [blogData, setBlogData] = useState(initialData || {
     title: '',
     content: '',
