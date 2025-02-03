@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import {Routes, Route, Navigate, Outlet } from 'react-router-dom';
 import LandingPage from './Components/LandingPage';
 import Signup from './Components/Signup';
 import Login from './Components/Login';
@@ -18,23 +18,22 @@ const isAuthor = () => {
 };
 
 
-const ProtectedAdminRoute = (children) => {
+const ProtectedAdminRoute = () => {
   if (!isAdmin()) {
     return <Navigate to="/login" replace />;
   }
-  return children;
+  return <Outlet />; 
 };
 
-const ProtectedAuthorRoute = (children) => {
+const ProtectedAuthorRoute = () => {
   if (!isAuthor()) {
     return <Navigate to="/login" replace />;
   }
-  return children;
+  return <Outlet />; 
 };
 
 function App() {
   return (
-    <Router>
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/signup" element={<Signup />} />
@@ -64,7 +63,6 @@ function App() {
      
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
-    </Router>
   );
 }
 
