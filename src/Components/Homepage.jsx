@@ -1,12 +1,27 @@
-import  { useState } from 'react';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types'; 
 import '../Styles/homepage.css';
 
-const BlogPost = (post) => {
+const BlogPost = ({ post }) => {
   const [likes, setLikes] = useState(0);
   const [showComments, setShowComments] = useState(false);
+  const [comment, setComment] = useState('');
+  const [comments, setComments] = useState([]);
+
+  const handleAddComment = (e) => {
+    e.preventDefault();
+    if (comment.trim()) {
+      setComments([...comments, { text: comment, date: new Date() }]);
+      setComment('');
+    }
+  };
 
   return (
     <div className="blog-post">
+      <div className="blog-image-container">
+        <img src={post.image} alt={post.title} className="blog-image" />
+      </div>
       <div className="blog-content">
         <h3>{post.title}</h3>
         <p>{post.content}</p>
@@ -16,90 +31,116 @@ const BlogPost = (post) => {
           className="action-btn like-btn"
           onClick={() => setLikes(prev => prev + 1)}
         >
-          LIKE ({likes})
+          ❤️ {likes}
         </button>
         <button 
           className="action-btn comment-btn"
           onClick={() => setShowComments(!showComments)}
         >
-          COMMENT
+          💭 Comments ({comments.length})
         </button>
       </div>
+      
+      {showComments && (
+        <div className="comments-section">
+          <form onSubmit={handleAddComment} className="comment-form">
+            <input
+              type="text"
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
+              placeholder="Write a comment..."
+              className="comment-input"
+            />
+            <button type="submit" className="comment-submit">Post</button>
+          </form>
+          
+          <div className="comments-list">
+            {comments.map((comment, index) => (
+              <div key={index} className="comment-item">
+                <p>{comment.text}</p>
+                <span className="comment-date">
+                  {comment.date.toLocaleDateString()}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 };
 
 const HomePage = () => {
-  
   const samplePosts = [
     {
       id: 1,
-      title: "BLOG POST",
-      content: "Sample blog content here...",
-      // image: "https://media.istockphoto.com/id/1924137135/photo/online-blog-search-learning-work-internet-freelance-business-post-website-online-homepage.jpg?s=2048x2048&w=is&k=20&c=4k6sFZXorQSQWyDYzbwIkmCOM7SMtZ2r-gjbGn7JtJU="
+      title: "The Art of Web Development",
+      content: "Exploring modern web development practices and techniques. Learn about the latest trends in web development and how to implement them in your projects.",
+      image: "https://cdn.pixabay.com/photo/2020/11/18/10/40/laptop-5754927_1280.jpg"
     },
     {
       id: 2,
-      title: "BLOG POST",
-      content: "Another blog post content...",
-      // image: "https://cdn.pixabay.com/photo/2015/09/04/23/28/wordpress-923188_1280.jpg"
+      title: "Understanding React Basics",
+      content: "A comprehensive guide to getting started with React. Discover the fundamental concepts and best practices in React development.",
+      image: "https://cdn.pixabay.com/photo/2015/09/04/23/28/wordpress-923188_1280.jpg"
     },
     {
       id: 3,
-      title: "BLOG POST",
-      content: "Yet another blog post...",
-      // image: "https://cdn.pixabay.com/photo/2014/02/13/07/28/wordpress-265132_1280.jpg"
+      title: "Understanding React Basics",
+      content: "A comprehensive guide to getting started with React. Discover the fundamental concepts and best practices in React development.",
+      image: "https://cdn.pixabay.com/photo/2015/09/04/23/28/wordpress-923188_1280.jpg"
     },
     {
       id: 4,
-      title: "BLOG POST",
-      content: "Yet another blog post...",
-      // image: "https://cdn.pixabay.com/photo/2019/09/17/18/48/computer-4484282_960_720.jpg"
+      title: "Understanding React Basics",
+      content: "A comprehensive guide to getting started with React. Discover the fundamental concepts and best practices in React development.",
+      image: "https://cdn.pixabay.com/photo/2015/09/04/23/28/wordpress-923188_1280.jpg"
     },
     {
       id: 5,
-      title: "BLOG POST",
-      content: "Yet another blog post...",
-      // image: "https://cdn.pixabay.com/photo/2014/12/28/13/20/wordpress-581849_960_720.jpg"
+      title: "Understanding React Basics",
+      content: "A comprehensive guide to getting started with React. Discover the fundamental concepts and best practices in React development.",
+      image: "https://cdn.pixabay.com/photo/2015/09/04/23/28/wordpress-923188_1280.jpg"
     },
     {
       id: 6,
-      title: "BLOG POST",
-      content: "Yet another blog post...",
-      // image: "https://cdn.pixabay.com/photo/2020/02/02/08/45/blogging-4812375_960_720.jpg"
+      title: "Understanding React Basics",
+      content: "A comprehensive guide to getting started with React. Discover the fundamental concepts and best practices in React development.",
+      image: "https://cdn.pixabay.com/photo/2015/09/04/23/28/wordpress-923188_1280.jpg"
     },
     {
       id: 7,
-      title: "BLOG POST",
-      content: "Yet another blog post...",
-      // image: "https://cdn.pixabay.com/photo/2020/06/19/21/18/laptop-5318837_960_720.jpg"
+      title: "Understanding React Basics",
+      content: "A comprehensive guide to getting started with React. Discover the fundamental concepts and best practices in React development.",
+      image: "https://cdn.pixabay.com/photo/2015/09/04/23/28/wordpress-923188_1280.jpg"
     },
     {
       id: 8,
-      title: "BLOG POST",
-      content: "Yet another blog post...",
-      // image: "https://cdn.pixabay.com/photo/2014/09/27/19/53/blogging-464042_1280.jpg"
+      title: "Understanding React Basics",
+      content: "A comprehensive guide to getting started with React. Discover the fundamental concepts and best practices in React development.",
+      image: "https://cdn.pixabay.com/photo/2015/09/04/23/28/wordpress-923188_1280.jpg"
     },
     {
       id: 9,
-      title: "BLOG POST",
-      content: "Yet another blog post...",
-      // image: "https://cdn.pixabay.com/photo/2018/04/14/02/40/paper-3318159_960_720.jpg"
+      title: "Understanding React Basics",
+      content: "A comprehensive guide to getting started with React. Discover the fundamental concepts and best practices in React development.",
+      image: "https://cdn.pixabay.com/photo/2015/09/04/23/28/wordpress-923188_1280.jpg"
     },
-    {
-      id: 10,
-      title: "BLOG POST",
-      content: "Yet another blog post...",
-      // image: "https://cdn.pixabay.com/photo/2020/11/18/10/40/laptop-5754927_1280.jpg"
-    }
 
   ];
 
   return (
     <div className="home-container">
-      <header className="home-header">
-        <h1>HOME PAGE</h1>
-      </header>
+      <nav className="home-nav">
+        <div className="nav-left">
+          <Link to="/" className="nav-logo">AD Blogs</Link>
+        </div>
+        <div className="nav-right">
+          <Link to="/dashboard" className="nav-link">Dashboard</Link>
+          <Link to="/login" className="nav-link">Login</Link>
+          <Link to="/signup" className="nav-link signup">Sign Up</Link>
+        </div>
+      </nav>
       
       <div className="blogs-grid">
         {samplePosts.map(post => (
@@ -108,6 +149,15 @@ const HomePage = () => {
       </div>
     </div>
   );
+};
+
+BlogPost.propTypes = {
+  post: PropTypes.shape({
+    id: PropTypes.number,
+    title: PropTypes.string,
+    content: PropTypes.string,
+    image: PropTypes.string
+  }).isRequired
 };
 
 export default HomePage;
