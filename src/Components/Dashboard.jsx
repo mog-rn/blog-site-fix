@@ -1,7 +1,7 @@
 import {useEffect} from 'react';
-import {useNavigate} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import '../Styles/dashboard.css';
-import {decodeToken} from './Login';
+import { decodeToken } from './Login';
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -10,12 +10,12 @@ const Dashboard = () => {
   let userRole = null;
   if (token) {
     const decodedToken = decodeToken(token);
-    userRole = decodedToken?.role; 
+    userRole = decodedToken?.role; // Extract role from the token
   }
 
   useEffect(() => {
     if (!token) {
-      navigate('/login'); 
+      navigate('/login'); // Redirect to login if not authenticated
     }
   }, [token, navigate]);
 

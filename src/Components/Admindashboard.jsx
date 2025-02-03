@@ -101,17 +101,15 @@ const AdminDashboard = () => {
   ]);
 
   const handleAuthorize = (commentId) => {
-    
-    setPendingComments(comments => 
-      comments.filter(comment => comment.id !== commentId)
+    setPendingComments(prevComments => 
+      prevComments.filter(comment => comment.id !== commentId)
     );
     alert('Comment authorized successfully!');
   };
 
   const handleReject = (commentId) => {
-  
-    setPendingComments(comments => 
-      comments.filter(comment => comment.id !== commentId)
+    setPendingComments(prevComments => 
+      prevComments.filter(comment => comment.id !== commentId)
     );
     alert('Comment rejected!');
   };
@@ -131,7 +129,7 @@ const AdminDashboard = () => {
             {pendingComments.map(comment => (
               <CommentItem
                 key={comment.id}
-                comment={comment}
+                comment={comment} 
                 onAuthorize={handleAuthorize}
                 onReject={handleReject}
               />
